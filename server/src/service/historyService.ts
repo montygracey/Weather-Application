@@ -1,6 +1,6 @@
 // TODO: Define a City class with name and id properties DONE
 import { promises as fs } from 'fs';
-import path from 'path';
+
 import { v4 as uuidv4 } from 'uuid';
 
 class City {
@@ -15,15 +15,12 @@ class City {
 class HistoryService {
   // TODO: Define a read method that reads from the searchHistory.json file DONE
   // private async read() {} DONE
-  private filePath: string;
+  
 
-  constructor() {
-      this.filePath = path.join(__dirname, 'searchHistory.json');
-  }
-
+// ERROR here 
   private async read(): Promise<City[]> {
       try {
-          const data = await fs.readFile(this.filePath, 'utf8');
+          const data = await fs.readFile("src/searchHistory.json", 'utf8');
           const cities: City[] = JSON.parse(data);
           return cities;
       } catch (error) {
@@ -36,7 +33,7 @@ class HistoryService {
   private async write(cities: City[]): Promise<void> {
     try {
         const data = JSON.stringify(cities, null, 2); 
-        await fs.writeFile(this.filePath, data, 'utf8');
+        await fs.writeFile("src/searchHistory.json", data, 'utf8');
     } catch (error) {
         throw new Error(`Error writing search history: ${(error as any).message}`);
     }
